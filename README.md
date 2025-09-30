@@ -38,8 +38,8 @@ Frontend (React)
 
 Clone this repository or copy the code into a folder:
 
-git clone https://github.com/yourusername/e-learningreact.git
-cd e-learningreact
+git clone https://github.com/vinay0921/e-learning-react.git
+cd e-learning-react
 
 
 Install dependencies:
