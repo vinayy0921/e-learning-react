@@ -1,0 +1,31 @@
+
+.profile-header {
+  background: linear-gradient(135deg, #1a1a2e, #16213e);
+  color: #fff;
+  padding: 40px 20px;
+  border-radius: 15px;
+  text-align: center;
+}
+
+.profile-header .icon {
+  font-size: 80px;
+  margin-bottom: 10px;
+  color: #0dcaf0;
+}
+
+.card-custom {
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-label {
+  font-weight: 500;
+}
+
+.footer {
+  margin-top: 50px;
+  background: linear-gradient(135deg, #1a1a2e, #16213e);
+  padding: 20px 0;
+  text-align: center;
+  color: #aaa;
+}

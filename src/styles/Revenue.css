@@ -1,0 +1,25 @@
+/* .fade-slide {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+.fade-slide.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+.category-item {
+  transition: all 0.25s ease;
+  border-radius: 6px;
+  padding: 0.5rem;
+}
+.category-item:hover {
+  background: rgba(0, 123, 255, 0.08);
+  transform: scale(1.02);
+}
+.card {
+  transition: all 0.3s ease;
+}
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+} */

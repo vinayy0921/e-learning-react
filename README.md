@@ -1,70 +1,119 @@
-# Getting Started with Create React App
+📚 E-Learning-React
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A modern E-Learning platform built with React for the frontend and PHP + MySQL API as backend.
+This project supports multi-role authentication (Admin, Student), course management, and interactive dashboards.
 
-## Available Scripts
+🚀 Features
 
-In the project directory, you can run:
+🔐 Authentication System (Student & Admin)
 
-### `npm start`
+🧑‍🎓 Student Dashboard – Browse & purchase courses
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+🧑‍🏫 Admin Dashboard – Verify & manage courses
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+📖 Profile Management – Update user info with persistence via localStorage
 
-### `npm test`
+⚡ React Router – Smooth navigation without reloads
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+🎨 Lucide Icons + Bootstrap UI for clean and modern design
 
-### `npm run build`
+🌐 Axios for API integration
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+💾 LocalStorage-based session handling (auto login after refresh)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+🛠️ Installation
+Backend (PHP API)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Place the e-api folder inside your XAMPP/WAMP htdocs directory.
 
-### `npm run eject`
+htdocs/
+  └── e-api/
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Import the database (if provided) into phpMyAdmin.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Update database credentials inside connection.php.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Frontend (React)
 
-## Learn More
+Clone this repository or copy the code into a folder:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+git clone https://github.com/yourusername/e-learningreact.git
+cd e-learningreact
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
+Install dependencies:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+npm install
+npm i react-router-dom lucide-react axios
 
-### Analyzing the Bundle Size
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Update API URL:
 
-### Making a Progressive Web App
+By default, API calls point to http://localhost:8080/e-api/
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Change it to match your local server, e.g. http://localhost/e-api/
 
-### Advanced Configuration
+Start development server:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+npm start
 
-### Deployment
+📂 Folder Structure
+e-learning-react/
+│── src/
+│   ├── components/    # Reusable UI components (Navbar, Sidebar, etc.)
+│   ├── context/       # AuthContext (localStorage + login/logout handling)
+│   ├── pages/         # Dashboard, Profile, Login, Register
+│   ├── App.js         # Main app with routes
+│   └── index.js       # Entry point
+│
+└── e-api/             # PHP backend API (place in htdocs)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+⚡ Usage
 
-### `npm run build` fails to minify
+Login using credentials stored in database.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+On successful login:
+
+Students → redirected to /user/dashboard
+
+Admins → redirected to /admin/dashboard
+
+User stays logged in even after refreshing (thanks to localStorage).
+
+Logout clears the session and redirects to login.
+
+🔧 Available Scripts
+
+In the frontend project directory, you can run:
+
+npm start
+
+Runs the app in development mode at http://localhost:3000
+.
+
+npm run build
+
+Builds the app for production in the build/ folder.
+
+npm test
+
+Runs the test runner in interactive watch mode.
+
+📌 Tech Stack
+
+Frontend: React, React Router, Axios, Lucide-React, Bootstrap
+
+Backend: PHP (API), MySQL (Database)
+
+State Management: React Context + LocalStorage
+
+📜 Notes
+
+Make sure your PHP server (XAMPP/WAMP) is running.
+
+Change API endpoints if your backend runs on a different port/path.
+
+Use npm run build before deploying React app to production.
+
+✨ Now you have a fully working E-LearningReact setup with documentation.
