@@ -79,7 +79,7 @@ const BrowseCourse = (props) => {
                                     <div className="card h-100 shadow-sm hover-shadow">
                                         <div style={{ position: "relative", paddingBottom: "56.25%", overflow: "hidden" }}>
                                             <img
-                                                src={course.thumbnail}
+                                                src={`http://localhost:8080/E-learning/${course.thumbnail.replace('../', '')}`}
                                                 alt={course.title}
                                                 className="card-img-top"
                                                 style={{

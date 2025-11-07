@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import '../styles/createCourse.css'
 
-const API = "http://localhost:8080/e-api/createCourse.php";
+const API = "http://localhost:8080/E-learning/admin/createCourseR.php";
 
 export default function CreateCourse() {
   const [formData, setFormData] = useState({

@@ -86,7 +86,7 @@ export default function CoursePlayer() {
                                         key={activeLesson.id}
                                         className="w-100 rounded"
                                         controls
-                                        src={`/public/${activeLesson.video_path}`}
+                                        src={`http://localhost:8080/E-learning/${activeLesson.video_path.replace('../', '')}`}
                                         height={'400px'}
                                     />
                                     {/* <div className="position-absolute top-50 start-50 translate-middle">

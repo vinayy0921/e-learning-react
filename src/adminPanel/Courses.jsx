@@ -138,8 +138,8 @@ export default function Courses() {
                                 <div className="d-flex justify-content-between flex-wrap">
                                     <div className="d-flex gap-4 flex-wrap">
                                         <img
-                                            src={c.thumbnail}
-                                            alt="course"
+                                            src={`${"http://localhost:8080/E-learning/"}${c.thumbnail.replace('../', '')}`}
+                                            alt={c.title}
                                             className="border rounded-3"
                                             style={{ width: "150px", height: "150px", objectFit: "cover" }}
                                         />
@@ -150,7 +150,7 @@ export default function Courses() {
                                             <Info label="Price" value={`₹${c.price}`} />
                                             <Info label="Created" value={c.created_at} />
                                             <Info label="Status" value={c.is_active ? "Active" : "Inactive"} />
-                                            <Info label="Enrolled" value={c.total_enrolled} />
+                                            <Info label="Enrolled" value={c.totalEnrolled} />
                                         </div>
                                     </div>
 

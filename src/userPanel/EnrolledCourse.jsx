@@ -65,7 +65,7 @@ const EnrolledCourse = (props) => {
             <div key={course.id} className="col-md-4 col-lg-3 mb-4">
               <div className="card h-100 shadow-sm hover-shadow">
                 <img
-                  src={course.thumbnail}
+                  src={`http://localhost:8080/E-learning/${course.thumbnail.replace('../', '')}`}
                   alt={course.title}
                   className="card-img-top"
                   style={{ height: '170px', objectFit: 'cover' }}
