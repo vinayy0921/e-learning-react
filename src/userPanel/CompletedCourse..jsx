@@ -1,18 +1,23 @@
 import React, { useState, useEffect } from 'react';
+import { useAuth } from "../context/AuthContext"; // ✅ to get user info
+import { BookOpen } from "lucide-react";
 
 const API = "http://localhost:8080/e-api/";
 
-const CompletedCourse = ({ id: userId }) => {
+const CompletedCourse = () => {
   const [completedCourses, setCompletedCourses] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const { user } = useAuth(); // ✅ get current user
+  const userId = user?.id;
 
   useEffect(() => {
+    if (!userId) return; // ⛔ Prevent fetch before user exists
+
     const fetchCompletedCourses = async () => {
       setIsLoading(true);
       try {
         const response = await fetch(`${API}completedCourses.php?userId=${userId}`);
         const data = await response.json();
-        // console.log("Fetched completed courses:", data);
         setCompletedCourses(data);
       } catch (error) {
         console.error("Error fetching completed courses:", error);
@@ -21,9 +26,7 @@ const CompletedCourse = ({ id: userId }) => {
       }
     };
 
-    if (userId) {
-      fetchCompletedCourses();
-    }
+    fetchCompletedCourses();
   }, [userId]);
 
   if (isLoading) {
@@ -45,18 +48,21 @@ const CompletedCourse = ({ id: userId }) => {
       {completedCourses.length === 0 ? (
         <div className="card mb-4">
           <div className="card-body text-center py-5">
-            <i className="bi bi-book-half fs-1 text-muted mb-3"></i>
+            <BookOpen size={48} className="text-muted mb-3" />
             <p className="text-muted">No completed courses yet</p>
-            <a href="#browse-courses" className="btn btn-primary mt-3">
+            <button
+              onClick={() => (window.location.href = "/user/dashboard/browse")}
+              className="btn btn-primary mt-3"
+            >
               Browse Courses
-            </a>
+            </button>
           </div>
         </div>
       ) : (
         <div className="container-fluid">
           <div className="row">
-            {completedCourses.map((course, index) => (
-              <div key={course.id} className="col-md-6 col-lg-4">
+            {completedCourses.map((course) => (
+              <div key={course.id} className="col-md-6 col-lg-4 mb-4">
                 <div className="card shadow-sm border-0 h-100">
                   <div className="card-body d-flex flex-column">
                     <h5 className="card-title fw-bold text-dark mb-2">
@@ -77,20 +83,19 @@ const CompletedCourse = ({ id: userId }) => {
                       )
                     </p>
 
-                    <a href="/" className="btn btn-success btn-sm w-100 mt-auto">
+                    <button
+                      className="btn btn-success btn-sm w-100 mt-auto"
+                      onClick={() => alert("🎓 Certificate download coming soon!")}
+                    >
                       <i className="bi bi-award me-1"></i>
                       Download Certificate
-                    </a>
+                    </button>
                   </div>
                 </div>
               </div>
-            )
-            )}
-
+            ))}
           </div>
         </div>
-
-
       )}
     </div>
   );

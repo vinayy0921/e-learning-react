@@ -1,92 +1,82 @@
-import React, { useState, useEffect } from 'react'
-import Header from './Header'
-import CompletedCourse from './CompletedCourse.';
-import BrowseCourse from './BrowseCourse';
-import Profile from './Profile';
-import MyCourses from './EnrolledCourse';
+import React, { useEffect } from 'react';
+import { NavLink, Outlet, useNavigate } from 'react-router-dom';
+import Header from './Header';
 import { useAuth } from "../context/AuthContext";
-import { useNavigate } from 'react-router-dom';
+import Footer from './Footer';
 
 const UserDashboard = () => {
-  const [activeTab, setActiveTab] = useState('browse');
   const { user } = useAuth();
   const navigate = useNavigate();
-  // console.log(user);
 
   useEffect(() => {
-    if (user === null) {
+    if (!user) {
       navigate('/auth/login');
-      return;
     }
   }, [user, navigate]);
-  if (user === null) {
-    return (
-     <div>loading</div>
-    );
+
+  if (!user) {
+    return <div>Loading...</div>;
   }
+
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#ffffff' }}>
+    <div style={{ minHeight: '100vh', backgroundColor: 'var(--bg-color)' }}>
       {/* Header */}
       <Header name={user.name} />
-      <h1 className='m-3'>Welcome {user.name}</h1>
+      <h1 className="p-3 m-0" style={{backgroundColor: "var(--header-color)"}}>Welcome {user.name}</h1>
 
-      {/* Main Content */}
-      <div className="container-fluid py-4">
-        <ul className="nav nav-tabs mb-4 d-flex justify-content-evenly" role="tablist">
+      {/* Tabs → NavLinks */}
+        <ul className="nav nav-tabs mb-4 d-flex justify-content-evenly" style={{backgroundColor: "var(--header-color)"}} >
           <li className="nav-item">
-            <button
-              className={`nav-link ${activeTab === 'browse' ? 'active' : ''}`}
-              onClick={() => setActiveTab('browse')}
+            <NavLink
+              to="browse"
+              className={({ isActive }) =>
+                `nav-link ${isActive ? 'active fw-semibold' : ''}`
+              }
             >
               Browse Courses
-            </button>
+            </NavLink>
           </li>
           <li className="nav-item">
-            <button
-              className={`nav-link ${activeTab === 'my-courses' ? 'active' : ''}`}
-              onClick={() => setActiveTab('my-courses')}
+            <NavLink
+              to="my-courses"
+              className={({ isActive }) =>
+                `nav-link ${isActive ? 'active fw-semibold' : ''}`
+              }
             >
               My Courses
-            </button>
+            </NavLink>
           </li>
           <li className="nav-item">
-            <button
-              className={`nav-link ${activeTab === 'completed-courses' ? 'active' : ''}`}
-              onClick={() => setActiveTab('completed-courses')}
+            <NavLink
+              to="completed-courses"
+              className={({ isActive }) =>
+                `nav-link ${isActive ? 'active fw-semibold' : ''}`
+              }
             >
               Completed Courses
-            </button>
+            </NavLink>
           </li>
           <li className="nav-item">
-            <button
-              className={`nav-link ${activeTab === 'profile' ? 'active' : ''}`}
-              onClick={() => setActiveTab('profile')}
+            <NavLink
+              to="profile"
+              className={({ isActive }) =>
+                `nav-link ${isActive ? 'active fw-semibold' : ''}`
+              }
             >
               Profile
-            </button>
+            </NavLink>
           </li>
         </ul>
+      <div className="container-fluid" >
 
+        {/* Nested Route Content */}
         <div className="tab-content">
-          {activeTab === 'browse' && (
-            <BrowseCourse userId={user.id} />
-          )}
-
-          {activeTab === 'my-courses' && (
-            <MyCourses id={user.id} />
-          )}
-
-          {activeTab === 'completed-courses' && (
-            <CompletedCourse id={user.id} />
-          )}
-
-          {activeTab === 'profile' && (
-            <Profile  />
-          )}
+          <Outlet />
         </div>
       </div>
+      <Footer />
     </div>
-  )
-}
+  );
+};
 
-export default UserDashboard
+export default UserDashboard;

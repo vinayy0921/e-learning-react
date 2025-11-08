@@ -7,7 +7,7 @@ const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
-  const { login, user } = useAuth();  // ✅ get user also
+  const { login, user } = useAuth();  
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 

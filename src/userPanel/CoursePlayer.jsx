@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { BookOpen } from "lucide-react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { useTheme } from "../context/ThemeContext"; // ✅ Theme Context
 
 const API = "http://localhost:8080/e-api/";
 
@@ -15,6 +16,7 @@ export default function CoursePlayer() {
     const { courseId, userId } = useParams();
     // console.log(courseId, userId);
     const navigate = useNavigate();
+    const { theme } = useTheme(); // ✅ Get current theme
 
 
 
@@ -65,7 +67,7 @@ export default function CoursePlayer() {
         <>
         <nav className="navbar navbar-expand-lg navbar-light bg-light border-bottom sticky-top">
                 <div className="container">
-                    <Link to="/user/dashboard" style={{ textDecoration: 'none' }}>&larr; Back</Link>
+                    <Link to="/user/dashboard/my-courses" style={{ textDecoration: 'none' }}>&larr; Back</Link>
                     <div className="navbar-brand d-flex align-items-center">
                         <BookOpen className="me-2" size={32} color="#030213" />
                         <span className="h4 mb-0 fw-semibold">LearnHub</span>
@@ -138,7 +140,7 @@ export default function CoursePlayer() {
                                 </button>
                             </div>
                             {comments.map((c, idx) => (
-                                <div key={idx} className="border rounded p-2 mb-2 bg-light">
+                                <div key={idx} className={`border rounded p-2 mb-2 ${theme === "dark" ? "bg-dark border-light text-light" : "bg-light border"}`}>
                                     <strong>{c.user_name}</strong>
                                     <p className="mb-0">{c.comment}</p>
                                 </div>

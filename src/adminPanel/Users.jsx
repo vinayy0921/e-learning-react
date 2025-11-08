@@ -13,12 +13,29 @@ export default function Users() {
     fetch(`${API}fetchUsers.php`)
       .then(res => res.json())
       .then(data => {
-        // console.log(data);
         setUsers(data);
         setLoading(false);
       })
       .catch(() => setLoading(false));
   }, []);
+
+  // ✅ Smooth fade-in animation for table rows
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("show");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+
+    document.querySelectorAll(".user-row").forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, [users]);
 
   const openModal = (user) => {
     setSelectedUser(user);
@@ -66,49 +83,52 @@ export default function Users() {
           </div>
         </div>
       ) : (
-        <table className="table table-hover">
-          <thead className="table-light">
-            <tr>
-              <th>User</th>
-              <th>Status</th>
-              <th>Joined</th>
-              <th>Courses</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredUsers.map(user => (
-              <tr key={user.id}>
-                <td>
-                  <div className="d-flex align-items-center">
-                    <i className="fa-regular fa-circle-user me-2" style={{ fontSize: 30 }}></i>
-                    <div>
-                      <p className="small mb-0 fw-medium">{user.name}</p>
-                      <p className="text-muted mb-0" style={{ fontSize: '0.75rem' }}>{user.email}</p>
-                    </div>
-                  </div>
-                </td>
-                <td>{user.is_active==="1" ? <span className="text-success">Active</span> : <span className="text-danger">Deactive</span>}</td>
-                <td className="small">{user.created_at}</td>
-                <td className="small">{user.total_courses}</td>
-                <td>
-                  <div className="d-flex gap-1">
-                    <button className="btn btn-outline-secondary btn-sm" onClick={() => openModal(user)}>
-                      <i className="fa-regular fa-eye me-1"></i>View
-                    </button>
-                    <button
-                      className={`btn btn-sm ${user.is_active==="1" ? "btn-outline-danger" : "btn-outline-success"}`}
-                      onClick={() => toggleActive(user.id)}
-                    >
-                      <i className={`fa-solid ${user.is_active==="1" ? "fa-user-slash" : "fa-user-check"} me-1`}></i>
-                      {user.is_active==="1"? "Deactivate" : "Activate"}
-                    </button>
-                  </div>
-                </td>
+        <div className="table-responsive">
+          <table className="table table-hover align-middle">
+            <thead className="table-light">
+              <tr>
+                <th>User</th>
+                <th>Status</th>
+                <th>Joined</th>
+                <th>Courses</th>
+                <th>Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {filteredUsers.map(user => (
+                <tr key={user.id} className="user-row fade-in">
+                  <td>
+                    <div className="d-flex align-items-center flex-wrap">
+                      <i className="fa-regular fa-circle-user me-2" style={{ fontSize: 30 }}></i>
+                      <div>
+                        <p className="small mb-0 fw-medium">{user.name}</p>
+                        <p className="text-muted mb-0" style={{ fontSize: '0.75rem' }}>{user.email}</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td>{user.is_active === "1" ? <span className="text-success">Active</span> : <span className="text-danger">Deactive</span>}</td>
+                  <td className="small">{user.created_at}</td>
+                  <td className="small">{user.total_courses}</td>
+                  <td>
+                    <div className="d-flex flex-wrap gap-1">
+                      <button className="btn btn-outline-secondary btn-sm" onClick={() => openModal(user)}>
+                        <i className="fa-regular fa-eye me-1"></i>View
+                      </button>
+                      <button
+                        className={`btn btn-sm ${user.is_active === "1" ? "btn-outline-danger" : "btn-outline-success"}`}
+                        onClick={() => toggleActive(user.id)}
+                      >
+                        <i className={`fa-solid ${user.is_active === "1" ? "fa-user-slash" : "fa-user-check"} me-1`}></i>
+                        {user.is_active === "1" ? "Deactivate" : "Activate"}
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
       )}
 
       {/* Modal */}
@@ -128,7 +148,7 @@ export default function Users() {
 
                 <h6 className="fw-bold text-start mt-3">Courses Enrolled:</h6>
                 <table className="table table-sm table-bordered align-middle">
-                  <thead className="table-light">
+                  <thead >
                     <tr>
                       <th>Course</th>
                       <th>Instructor</th>

@@ -29,3 +29,26 @@
   text-align: center;
   color: #aaa;
 }
+.footer-link {
+  color: var(--bs-body-color);
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+
+[data-theme="dark"] .footer-link:hover {
+  color: #66b2ff;
+}
+
+[data-theme="light"] .footer-link:hover {
+  color: #0d6efd;
+}
+
+[data-theme="dark"] .footer {
+  background-color: #121212 !important;
+  color: #ddd !important;
+}
+
+[data-theme="light"] .footer {
+  background-color: #f8f9fa !important;
+  color: #ddd !important;
+}

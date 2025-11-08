@@ -1,37 +1,28 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
+import { clearTheme } from "./ThemeContext";
 
 const API = "http://localhost:8080/e-api/";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [authLoaded, setAuthLoaded] = useState(false);
 
-  // 🔹 Load user from localStorage on app start
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
+    if (storedUser) setUser(JSON.parse(storedUser));
+    setAuthLoaded(true); // ✅ mark loaded
   }, []);
 
-  // 🔹 Save user to localStorage whenever it changes
   useEffect(() => {
-    if (user) {
-      localStorage.setItem("user", JSON.stringify(user));
-    } else {
-      localStorage.removeItem("user");
-    }
+    if (user) localStorage.setItem("user", JSON.stringify(user));
+    else localStorage.removeItem("user");
   }, [user]);
 
-  // 🔹 Register Function
   const register = async (name, email, password) => {
     try {
-      const res = await axios.post(`${API}register.php`, {
-        name,
-        email,
-        password,
-      });
+      const res = await axios.post(`${API}register.php`, { name, email, password });
       if (res.data.status === "success") {
         setUser(res.data.user);
         return { success: true };
@@ -42,7 +33,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // 🔹 Login Function
   const login = async (email, password) => {
     try {
       const res = await axios.post(`${API}login.php`, { email, password });
@@ -56,15 +46,15 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // 🔹 Logout Function
   const logout = () => {
     setUser(null);
-    localStorage.removeItem("user"); // clear storage
+    localStorage.removeItem("user");
+     clearTheme();
   };
 
   return (
-    <AuthContext.Provider value={{ user, setUser, register, login, logout }}>
-      {children}
+    <AuthContext.Provider value={{ user, setUser, register, login, logout, authLoaded }}>
+      {authLoaded ? children : <div>Loading...</div>} 
     </AuthContext.Provider>
   );
 };

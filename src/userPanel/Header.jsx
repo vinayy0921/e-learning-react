@@ -1,8 +1,9 @@
 import React from 'react'
 import { BookOpen } from 'lucide-react';
+import { useTheme } from "../context/ThemeContext";
 
 export default function Header(props) {
- 
+   const { theme, toggleTheme } = useTheme(); // ✅ theme control
   
   return (
     <div>
@@ -10,7 +11,7 @@ export default function Header(props) {
         <div className="container-fluid">
           <div className="d-flex align-items-center">
             <div className="navbar-brand d-flex align-items-center me-4">
-              <BookOpen size={24} color="#030213" className="me-2" />
+              <BookOpen size={24} color={theme === "dark" ? "#f8f9fa" : "#030213"} className="me-2" />
               <span className="h5 mb-0 fw-semibold">LearnHub</span>
             </div>
             

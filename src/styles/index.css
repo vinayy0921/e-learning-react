@@ -1,13 +1,108 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* 🌞 MATERIAL LIGHT THEME */
+:root {
+  --bg-color: rgb(248, 248, 248);
+  --header-color: #ffffff;
+  --text-color: #212121;
+  --card-bg: #ffffff;
+  --navbar-bg: #ffffff;
+  --navbar-text: #212121;
+  --accent: #1976d2;
+  --border-color: #e0e0e0;
+  --tab-bg: #ffffff;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* 🌚 GITHUB DARK THEME */
+[data-theme="dark"] {
+  --bg-color: #0d1117;
+    --header-color: #0d1117;
+  --text-color: #e6edf3;
+  --card-bg: #161b22;
+  --navbar-bg: #161b22;
+  --navbar-text: #e6edf3;
+  --accent: #58a6ff;
+  --border-color: #30363d;
+  --tab-bg: #161b22;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* 🩶 NOTION DARK THEME */
+[data-theme="notion"] {
+  --bg-color: #1b1b1b;
+  --text-color: #f1f1f1;
+  --card-bg: #242424;
+  --navbar-bg: #202020;
+  --navbar-text: #f8f9fa;
+  --accent: #9b6bff;
+  --border-color: #343434;
+  --tab-bg: #282828;
+  --shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* 🔸 GLOBAL ELEMENTS */
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
+}
+
+.navbar {
+  background-color: var(--navbar-bg) !important;
+  color: var(--navbar-text) !important;
+  box-shadow: var(--shadow);
+}
+
+.navbar .navbar-brand,
+.navbar .nav-link,
+.navbar .btn,
+.navbar span {
+  color: var(--navbar-text) !important;
+}
+
+.card,
+.table,
+.modal-content {
+  background-color: var(--card-bg) !important;
+  color: var(--text-color) !important;
+  border-color: var(--border-color) !important;
+  box-shadow: var(--shadow);
+}
+
+input,
+textarea,
+select {
+  background-color: var(--card-bg) !important;
+  color: var(--text-color) !important;
+  border: 1px solid var(--border-color);
+}
+
+.nav-tabs {
+  /* background-color: var(--tab-bg); */
+  border-bottom: 1px solid var(--border-color);
+}
+
+.nav-tabs .nav-link {
+  color: var(--text-color);
+  border: none;
+  transition: 0.3s;
+}
+
+.nav-tabs .nav-link.active {
+  border-bottom: 3px solid var(--accent);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.btn-primary {
+  background-color: var(--accent);
+  border-color: var(--accent);
+}
+
+.btn-primary:hover {
+  filter: brightness(1.1);
+}
+
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }

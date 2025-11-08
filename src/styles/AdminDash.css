@@ -1,3 +1,7 @@
+body {
+  background-color: #f8f9fa;
+}
+
 /* Card Hover */
 .card {
   border-radius: 12px;
@@ -65,4 +69,89 @@
 .course-card:hover {
   transform: translateY(-8px);
   box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+.user-row {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.5s ease-in-out;
+}
+
+.user-row.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+.fade-slide {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s ease-in-out;
+}
+
+.fade-slide.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (max-width: 768px) {
+  .table td, .table th {
+    font-size: 0.8rem;
+    white-space: nowrap;
+  }
+}
+/* === THEME-AWARE OVERVIEW STYLING === */
+
+.fade-scroll {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s ease;
+}
+
+.fade-scroll.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Cards use theme variables */
+.card {
+  background-color: var(--card-bg) !important;
+  color: var(--text-color) !important;
+  border: 1px solid var(--border-color) !important;
+  box-shadow: var(--shadow);
+}
+
+/* Header inside cards */
+.card-header {
+  background-color: var(--card-bg) !important;
+  border-bottom: 1px solid var(--border-color) !important;
+  color: var(--text-color) !important;
+}
+
+/* Enrolled Courses specific rows */
+.course-row {
+  background-color: var(--bg-color);
+  border: 1px solid var(--border-color);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.course-row:hover {
+  background-color: var(--accent);
+  color: #fff;
+  transform: scale(1.01);
+}
+
+/* Platform Health section badges adjust color */
+[data-theme="dark"] .badge.bg-success {
+  background-color: #238636 !important; /* GitHub dark green */
+}
+
+[data-theme="light"] .badge.bg-success {
+  background-color: #28a745 !important;
+}
+
+/* Smooth transitions */
+.card,
+.card-header,
+.course-row,
+h4,
+p,
+span {
+  transition: background-color 0.3s ease, color 0.3s ease;
 }

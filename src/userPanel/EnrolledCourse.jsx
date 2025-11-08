@@ -1,16 +1,20 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import { BookOpen, Star, Clock } from "lucide-react";
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from "../context/AuthContext";  // ✅ Added
 
 const API = "http://localhost:8080/e-api/";
 
-const EnrolledCourse = (props) => {
+const EnrolledCourse = () => {
   const [enrolledCourses, setEnrolledCourses] = useState([]);
-  const userId = props.id;
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const { user } = useAuth(); // ✅ Get logged-in user from context
+  const userId = user?.id;
 
   useEffect(() => {
+    if (!userId) return; // 🛡️ Prevent API call before user is ready
+
     const fetchEnrolledCourses = async () => {
       setIsLoading(true);
       try {
@@ -25,23 +29,27 @@ const EnrolledCourse = (props) => {
     };
 
     fetchEnrolledCourses();
-    
   }, [userId]);
+
   const handleContinue = (courseId) => {
-    navigate(`/user/coursePlayer/${courseId }/${userId}`);
-  }
+    navigate(`/user/coursePlayer/${courseId}/${userId}`);
+  };
+
+  const handleBrowse = () => {
+    navigate("/user/dashboard/browse"); // ✅ Go to Browse Courses tab
+  };
 
   if (isLoading) {
     return (
       <>
-      <h2 className="mb-4" id='my-courses'>My Courses</h2>
-      <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "200px" }}>
-        <div className="spinner-border text-primary" role="status">
-          <span className="visually-hidden">Loading...</span>
+        <h2 className="mb-4" id='my-courses'>My Courses</h2>
+        <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "200px" }}>
+          <div className="spinner-border text-primary" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
         </div>
-      </div>
       </>
-    )
+    );
   }
 
   return (
@@ -52,9 +60,7 @@ const EnrolledCourse = (props) => {
           <div className="card-body text-center py-5">
             <BookOpen size={48} className="text-muted mb-3" />
             <p className="text-muted">No courses enrolled yet</p>
-            <button
-              className="btn btn-primary mt-3"
-            >
+            <button className="btn btn-primary mt-3" onClick={handleBrowse}>
               Browse Courses
             </button>
           </div>
@@ -71,10 +77,7 @@ const EnrolledCourse = (props) => {
                   style={{ height: '170px', objectFit: 'cover' }}
                 />
                 <div className="card-body d-flex flex-column">
-                  <span
-                    className="badge bg-primary align-self-start"
-                    style={{ top: '8px', right: '8px' }}
-                  >
+                  <span className="badge bg-primary align-self-start" style={{ top: '8px', right: '8px' }}>
                     {course.category}
                   </span>
                   <h5 className="card-title mt-2">{course.title}</h5>
@@ -93,7 +96,7 @@ const EnrolledCourse = (props) => {
 
                   <div className="d-flex justify-content-between align-items-center mt-3">
                     <span className="h5 mb-0">₹{course.price}</span>
-                    <button className="btn btn-primary btn-sm" onClick={() => {handleContinue(course.id)}}>
+                    <button className="btn btn-primary btn-sm" onClick={() => handleContinue(course.id)}>
                       Continue
                     </button>
                   </div>
@@ -104,7 +107,7 @@ const EnrolledCourse = (props) => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
 export default EnrolledCourse;

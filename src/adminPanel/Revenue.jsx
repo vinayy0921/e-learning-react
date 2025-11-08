@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "../styles/Revenue.css"; 
+import "../styles/Revenue.css";
 
 const API = "http://localhost:8080/e-api/revenueStat.php";
 
@@ -22,12 +22,14 @@ export default function Revenue() {
       .catch(() => setLoading(false));
   }, []);
 
+  // ✅ Smooth fade-in scroll animation
   useEffect(() => {
-    // Animate fade-slide
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
+        entries.forEach((entry, i) => {
           if (entry.isIntersecting) {
+            // Add delay for staggered animation
+            entry.target.style.transitionDelay = `${i * 0.05}s`;
             entry.target.classList.add("show");
             observer.unobserve(entry.target);
           }
@@ -35,7 +37,9 @@ export default function Revenue() {
       },
       { threshold: 0.15 }
     );
+
     document.querySelectorAll(".fade-slide").forEach((el) => observer.observe(el));
+
     return () => observer.disconnect();
   }, [stats]);
 
@@ -44,7 +48,10 @@ export default function Revenue() {
       <h4 className="mb-4">Revenue Analytics</h4>
 
       {loading ? (
-        <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "300px" }}>
+        <div
+          className="d-flex justify-content-center align-items-center"
+          style={{ minHeight: "300px" }}
+        >
           <div className="spinner-border text-primary" role="status">
             <span className="visually-hidden">Loading...</span>
           </div>
