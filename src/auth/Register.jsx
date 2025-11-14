@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { BookOpen } from "lucide-react";
-import { useAuth } from "../context/AuthContext";
+// import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 const Register = () => {
-  const {register} = useAuth();
+  // const { register } = useAuth();
   const navigate = useNavigate();
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -21,23 +23,48 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("clicked");
+
+    if (loading) return;
+
     if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match!");
+      setError("Passwords do not match!");
+      return;
+    } else if (formData.password.length < 6) {
+      setError("Password must be at least 6 characters long!");
       return;
     }
-    const result = await register(formData.name, formData.email, formData.password);
-    console.log(result);
-    if(result.success){
-      navigate('/user/dashboard');
+
+    setError(null);
+    setLoading(true);
+
+    try {
+      const res = await fetch("http://localhost:8080/e-api/register.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        navigate("/user/dashboard/browse"); 
+      } else {
+        setError(data.message || "Registration failed");
+      }
+    } catch (err) {
+      console.error(err);
+      setError("Server error occurred");
+    } finally {
+      setLoading(false);
     }
   };
+
 
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-light bg-light border-bottom sticky-top">
         <div className="container">
-          <Link to="/" style={{textDecoration:'none'}}>&larr; Back</Link>
+          <Link to="/" style={{ textDecoration: 'none' }}>&larr; Back</Link>
           <div className="navbar-brand d-flex align-items-center">
             <BookOpen className="me-2" size={32} color="#030213" />
             <span className="h4 mb-0 fw-semibold">LearnHub</span>
@@ -110,9 +137,22 @@ const Register = () => {
                 </div>
               </div>
 
-              <button type="submit" className="btn btn-primary w-100 rounded-3 py-2">
-                Create Account
+              <button
+                type="submit"
+                className="btn btn-primary w-100 rounded-3 py-2"
+                disabled={loading}
+              >
+                {loading ? "Creating Account..." : "Create Account"}
               </button>
+
+              {error && (
+                <div
+                  className="alert alert-danger mt-3 text-center"
+                  role="alert"
+                >
+                  {error}
+                </div>
+              )}
 
               <div className="text-center mt-3">
                 <small className="text-muted">

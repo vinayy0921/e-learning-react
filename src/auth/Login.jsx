@@ -11,13 +11,14 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // ✅ Auto-redirect if already logged in (from localStorage)
   useEffect(() => {
+    localStorage.setItem("theme", "light");
+  document.body.setAttribute("data-theme", "light");
     if (user) {
       if (user.role === "student") {
-        navigate("/user/dashboard");
+        navigate("/user/dashboard/browse");
       } else if (user.role === "admin") {
-        navigate("/admin/dashboard");
+        navigate("/admin/dashboard/overview");
       }
     }
   }, [user, navigate]);
@@ -33,9 +34,9 @@ const Login = () => {
       const result = await login(formData.email, formData.password);
       if (result.success) {
         if (result.role === "student") {
-          navigate("/user/dashboard");
+          navigate("/user/dashboard/browse");
         } else if (result.role === "admin") {
-          navigate("/admin/dashboard");
+          navigate("/admin/dashboard/overview");
         }
       } else {
         setError(result.message);

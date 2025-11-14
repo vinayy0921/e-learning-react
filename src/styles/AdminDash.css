@@ -70,16 +70,7 @@ body {
   transform: translateY(-8px);
   box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
-.user-row {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.5s ease-in-out;
-}
 
-.user-row.show {
-  opacity: 1;
-  transform: translateY(0);
-}
 .fade-slide {
   opacity: 0;
   transform: translateY(20px);
@@ -154,4 +145,29 @@ h4,
 p,
 span {
   transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.user-row p {
+    margin: 0 !important;
+    line-height: 1.2;
+}
+
+/* Make rows compact */
+.table td, .table th {
+    padding: 10px 12px !important;
+}
+
+/* Remove extra margin from text */
+.user-row p {
+    margin: 0 !important;
+    line-height: 1.2;
+}
+
+[data-theme="dark"] .user-row:hover {
+  background-color: #f4f4f4 !important;
+}
+
+/* LIGHT Hover */
+[data-theme="light"] .user-row:hover {
+  background-color: #f4f4f4 !important;
 }

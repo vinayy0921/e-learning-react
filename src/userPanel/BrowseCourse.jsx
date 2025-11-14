@@ -2,14 +2,17 @@ import React, { useState, useEffect } from "react";
 import { Search, SortAsc, Star, Clock } from "lucide-react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 const API = "http://localhost:8080/e-api/";
 
-const BrowseCourse = (props) => {
+const BrowseCourse = () => {
     const [courses, setCourses] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
+    const { user } = useAuth();
+    const userId = user?.id;
 
     const fetchCourses = async () => {
         try {
@@ -33,7 +36,7 @@ const BrowseCourse = (props) => {
     );
 
     const handleEnroll = (courseId) =>{
-       navigate(`/user/enroll/${courseId}/${props.userId}`);
+       navigate(`/user/enroll/${courseId}/${userId}`);
     }
 
     return (

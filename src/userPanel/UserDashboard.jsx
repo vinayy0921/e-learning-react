@@ -3,6 +3,7 @@ import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import Header from './Header';
 import { useAuth } from "../context/AuthContext";
 import Footer from './Footer';
+import '../styles/UserDash.css';
 
 const UserDashboard = () => {
   const { user } = useAuth();
@@ -21,7 +22,7 @@ const UserDashboard = () => {
   return (
     <div style={{ minHeight: '100vh', backgroundColor: 'var(--bg-color)' }}>
       {/* Header */}
-      <Header name={user.name} />
+      <Header user={user} />
       <h1 className="p-3 m-0" style={{backgroundColor: "var(--header-color)"}}>Welcome {user.name}</h1>
 
       {/* Tabs → NavLinks */}

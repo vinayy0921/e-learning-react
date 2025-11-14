@@ -38,7 +38,7 @@ export default function Header({ user = "Admin", logout }) {
               </>
             ) : (
               <>
-                <i class="fa-solid fa-sun"></i>
+                <i className="fa-solid fa-sun"></i>
                 <span className="d-none d-sm-inline">Light</span>
               </>
             )}

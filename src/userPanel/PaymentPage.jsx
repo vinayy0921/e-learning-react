@@ -2,23 +2,23 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import { CreditCard, QrCode, PlayCircle } from "lucide-react";
-import { useTheme } from "../context/ThemeContext"; // ✅ Theme Context
+import { useTheme } from "../context/ThemeContext"; 
 
 const API = "http://localhost:8080/e-api/";
 
 export default function PaymentPage() {
   const { courseId, userId } = useParams();
   const navigate = useNavigate();
-  const { theme } = useTheme(); // ✅ Get current theme
+  const { theme } = useTheme(); 
 
   if (!courseId || !userId) {
-    navigate("/user/dashboard");
+    navigate("/user/dashboard/browse");
   }
 
   const [course, setCourse] = useState(null);
   const [lessons, setLessons] = useState([]);
   const [comments, setComments] = useState([]);
-  const [showForm, setShowForm] = useState(""); // "card" or "upi"
+  const [showForm, setShowForm] = useState("");
   const [form, setForm] = useState({ number: "", expiry: "", cvv: "", holder: "" });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(true);
@@ -66,7 +66,7 @@ export default function PaymentPage() {
         ...form,
       });
       alert("Payment successful! 🎉");
-      navigate("/user/dashboard");
+      navigate("/user/dashboard/my-courses");
     } catch (err) {
       console.error("Payment failed:", err);
       alert("Payment failed");
@@ -80,7 +80,7 @@ export default function PaymentPage() {
   if (!course)
     return <p className="text-center mt-5 text-muted">Course not found.</p>;
 
-  // ✅ Apply theme classes dynamically
+
   const bgClass = theme === "dark" ? "bg-dark text-light" : "bg-white text-dark";
   const cardClass = theme === "dark" ? "bg-secondary text-light border-0" : "bg-white text-dark border";
   const borderClass = theme === "dark" ? "border-light" : "border-dark";
